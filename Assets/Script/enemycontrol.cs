@@ -10,6 +10,8 @@ public class enemycontrol : MonoBehaviour
     [SerializeField] float movingSpeed = 2;
     [SerializeField] float maxdetectdistance = 30;
 
+    int Life = 100;
+
     Transform playerTransform, t;
 
     // Start is called before the first frame update
@@ -34,4 +36,11 @@ public class enemycontrol : MonoBehaviour
         }
         
     }
+    public bool Damage() {
+        Life -= 10;
+        if(Life==0) {
+            return true;
+        }
+        return false;
+    } 
 }
