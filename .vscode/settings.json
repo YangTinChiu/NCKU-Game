@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "NCKU-School-Game.sln"
+    "dotnet.defaultSolution": "NCKU-Game.sln"
 }

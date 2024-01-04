@@ -11,6 +11,8 @@ public class John_animator : MonoBehaviour
     public LayerMask EnemyLayer;
     GameObject Geometry;
 
+    float damageDelay = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,9 @@ public class John_animator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Z)) {
+        damageDelay += Time.deltaTime;
+        if(Input.GetKey(KeyCode.Z) && damageDelay > 1.0f) {
+            damageDelay = 0.0f;
             // perform animation
             animator.SetInteger("isFight",1);
             Collider[] enemyInScope = Physics.OverlapSphere(Geometry.transform.position, attackRange, EnemyLayer);

@@ -11,9 +11,11 @@ public class enemycontrol : MonoBehaviour
     [SerializeField] float movingSpeed = 2;
     [SerializeField] float maxdetectdistance = 10;
 
-    int Life = 100;
+    public int Life = 100;
+    public health_bar health_bar_func;
 
     Transform playerTransform, t;
+    float damageDelay = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class enemycontrol : MonoBehaviour
         
     }
     void FixedUpdate() {
+        damageDelay += Time.deltaTime;
         if(animator.GetInteger("State") == 3) {
             return;    
         }
@@ -48,10 +51,22 @@ public class enemycontrol : MonoBehaviour
     }
     public bool Damage() {
         Life -= 10;
+
+        health_bar_func.set_health(Life / 100f);
+
         if(Life==0) {
             animator.SetInteger("State", 3);
             return true;
         }
         return false;
-    } 
+    }
+    
+    void OnCollisionStay(Collision collision) {
+        // if(collision.gameObject.tag == "Player") {
+        //     if(damageDelay >= 1f) {
+        //         damageDelay = 0.0f;
+        //         Damage();
+        //     }
+        // }
+    }
 }
