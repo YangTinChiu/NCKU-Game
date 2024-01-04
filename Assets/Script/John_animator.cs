@@ -7,7 +7,9 @@ using UnityEngine.ProBuilder.Shapes;
 public class John_animator : MonoBehaviour
 {
     Animator animator;
-    float attackRange = 1000f;
+    [SerializeField]float attackRange = 10f;
+    [SerializeField]float atk = 10;
+
     public LayerMask EnemyLayer;
     GameObject Geometry;
 
@@ -24,14 +26,14 @@ public class John_animator : MonoBehaviour
     void Update()
     {
         damageDelay += Time.deltaTime;
-        if(Input.GetKey(KeyCode.Z) && damageDelay > 1.0f) {
+        if(Input.GetMouseButton(0) && damageDelay > 1.0f) {
             damageDelay = 0.0f;
             // perform animation
             animator.SetInteger("isFight",1);
             Collider[] enemyInScope = Physics.OverlapSphere(Geometry.transform.position, attackRange, EnemyLayer);
             foreach (Collider enemy in enemyInScope) {
                 enemycontrol enemyControl = enemy.GetComponent<enemycontrol>();
-                enemyControl.Damage();
+                enemyControl.Damage(atk);
             }
         }
         else {
