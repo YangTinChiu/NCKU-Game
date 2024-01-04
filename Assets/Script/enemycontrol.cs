@@ -10,8 +10,9 @@ public class enemycontrol : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float movingSpeed = 2;
     [SerializeField] float maxdetectdistance = 10;
+    [SerializeField] float atk = 5;
 
-    public int Life = 100;
+    public float Life = 100;
     public health_bar health_bar_func;
 
     Transform playerTransform, t;
@@ -43,18 +44,33 @@ public class enemycontrol : MonoBehaviour
             Vector3 movingDirction = new Vector3(playerTransform.position.x - t.position.x, 0,playerTransform.position.z - t.position.z).normalized;
             t.localPosition += movingSpeed * Time.deltaTime * movingDirction;
             animator.SetInteger("State", 1);
-        }else if ((2 >= distance) && (distance <= maxdetectdistance)){
+        }else if (2 >= distance){
             animator.SetInteger("State", 2);
+
+            //enemy attack
+            if (damageDelay > 2.0f) {
+                damageDelay = 0f;
+
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, (playerTransform.position-transform.position), out hit, 2))
+                {
+                    if(hit.transform == playerTransform)
+                    {
+                        JohnState johnState = player.GetComponent<JohnState>();
+                        johnState.Damage(atk);
+                    }
+                }
+            }
         }else {
             animator.SetInteger("State", 0);
         }
     }
-    public bool Damage() {
-        Life -= 10;
+    public bool Damage(float atk) {
+        Life -= atk;
 
         health_bar_func.set_health(Life / 100f);
 
-        if(Life==0) {
+        if(Life<=0) {
             animator.SetInteger("State", 3);
             return true;
         }
