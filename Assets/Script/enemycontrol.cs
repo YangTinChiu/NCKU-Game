@@ -39,6 +39,15 @@ public class enemycontrol : MonoBehaviour
 
         float distance = Vector3.Distance(t.position, playerTransform.position);
 
+        //face
+        if(distance <= maxdetectdistance)
+        {
+            Vector3 v = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
+            Quaternion rotation = Quaternion.LookRotation(v - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 50);
+        }
+
+        //moving and attack
         if((2 <= distance) && (distance <= maxdetectdistance))
         { 
             Vector3 movingDirction = new Vector3(playerTransform.position.x - t.position.x, 0,playerTransform.position.z - t.position.z).normalized;
