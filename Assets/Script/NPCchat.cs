@@ -49,6 +49,10 @@ public class NPCchat : MonoBehaviour
     {
         if (other.name.Contains("NPC"))
         {
+            Vector3 v = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
+            Quaternion rotation = Quaternion.LookRotation(v - other.transform.position);
+            other.transform.rotation = Quaternion.Slerp(other.transform.rotation, rotation, Time.deltaTime * 50);
+
             ischating = false;
             panel.SetActive(false);
             canvas.SetActive(false);
