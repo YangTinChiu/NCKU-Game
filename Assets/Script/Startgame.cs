@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Startgame : MonoBehaviour, IPointerClickHandler
 {
-    public int SceneIndex = 2;
+    public int SceneIndex = 1;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         Scene scene = SceneManager.GetActiveScene();
+        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(SceneIndex);
     }
 }
